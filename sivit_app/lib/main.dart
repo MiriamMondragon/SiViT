@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,9 +18,14 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
             fontSize: 20,
           ))),
-      home: Bienvenida(),
+      home: InicioApp(),
     );
   }
+}
+
+class InicioApp extends StatefulWidget {
+  @override
+  _InicioApp createState() => new _InicioApp();
 }
 
 class Bienvenida extends StatefulWidget {
@@ -26,7 +33,18 @@ class Bienvenida extends StatefulWidget {
   _Bienvenida createState() => new _Bienvenida();
 }
 
-class _Bienvenida extends State<Bienvenida> {
+class InicioSesion extends StatefulWidget {
+  @override
+  _InicioSesion createState() => new _InicioSesion();
+}
+
+class MenuInicial extends StatefulWidget {
+  @override
+  _MenuInicial createState() => new _MenuInicial();
+}
+
+
+class _InicioApp extends State<InicioApp> {
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
@@ -37,7 +55,7 @@ class _Bienvenida extends State<Bienvenida> {
     } else {
       prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new PaginaInicio()));
+          new MaterialPageRoute(builder: (context) => new Bienvenida()));
           print("Pagina Inicio");
     }
   }
@@ -70,18 +88,8 @@ class _Bienvenida extends State<Bienvenida> {
   }
 }
 
-class PaginaInicio extends StatefulWidget {
-  @override
-  _PaginaInicio createState() => new _PaginaInicio();
-}
 
-class MenuInicial extends StatefulWidget {
-  @override
-  _MenuInicial createState() => new _MenuInicial();
-}
-
-
-class _PaginaInicio extends State<PaginaInicio> {
+class _Bienvenida extends State<Bienvenida> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -127,7 +135,7 @@ class _PaginaInicio extends State<PaginaInicio> {
                 onPressed: () { 
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MenuInicial())
+                  MaterialPageRoute(builder: (context) => InicioSesion())
                 );}
               ),
             ]
@@ -135,6 +143,154 @@ class _PaginaInicio extends State<PaginaInicio> {
           ]
         )
       )
+    );
+  }
+}
+
+
+class _InicioSesion extends State<InicioSesion> {
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      resizeToAvoidBottomInset:  false,
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+           image: AssetImage("assets/Degradado_Azul.jpg"),
+            fit: BoxFit.fill
+          )
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new Text("Ingresar", 
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+            textAlign: TextAlign.left),
+            SizedBox(height: 40),
+            new Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Text('Número de Identidad:                            ', 
+              style: TextStyle(fontSize: 20, color: Colors.white), textAlign: TextAlign.left),
+            ),
+            SizedBox(height: 10),
+            new Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+              child: TextFormField(
+                decoration: new InputDecoration(
+                  prefixText: '     ',
+                  hintText: 'Ejemplo: 0801-1992-12121', hintStyle: TextStyle(fontStyle: FontStyle.italic),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                  )
+                ),
+                validator: (val) {
+                  if(val.length == 0) {
+                    return "Su No. Identidad es obligatorio";
+                  }else {
+                    return "Uwu";
+                  }
+                },
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(fontFamily: "Poppins"),
+              )
+            ),
+
+            SizedBox(height: 20),
+
+            new Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Text('Número de Licencia:                            ', 
+              style: TextStyle(fontSize: 20, color: Colors.white), textAlign: TextAlign.left),
+            ),
+            SizedBox(height: 10),
+            new Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+              child: TextFormField(
+                decoration: new InputDecoration(
+                  prefixText: '     ',
+                  hintText: 'Ejemplo: 17-325252', hintStyle: TextStyle(fontStyle: FontStyle.italic),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                  )
+                ),
+                validator: (val) {
+                  if(val.length == 0) {
+                    return "Su No. Licencia es obligatorio";
+                  }else {
+                    return "Uwu";
+                  }
+                },
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(fontFamily: "Poppins"),
+              )
+            ),
+
+            SizedBox(height: 20),
+
+            new Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Text('Placa Vehicular:                            ', 
+              style: TextStyle(fontSize: 20, color: Colors.white), textAlign: TextAlign.left),
+            ),
+            SizedBox(height: 10),
+            new Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+              child: TextFormField(
+                decoration: new InputDecoration(
+                  prefixText: '     ',
+                  hintText: 'Ejemplo: PEH 9457', hintStyle: TextStyle(fontStyle: FontStyle.italic),
+                  helperText: 'En caso de no poseer un vehiculo propio puede dejar este campo en blanco', 
+                  helperMaxLines: 2,
+                  helperStyle: TextStyle(fontSize: 15, color: Colors.white),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: new OutlineInputBorder(
+                    borderRadius: new BorderRadius.circular(25.0),
+                  )
+                ),
+                validator: (val) {
+                  if(val.length == 0) {
+                    return "Su placa no es obligatoria";
+                  }else {
+                    return "Uwu";
+                  }
+                },
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(fontFamily: "Poppins"),
+              )
+            ),
+
+            //SizedBox(height: 20),
+
+            new ButtonBar(
+            buttonPadding: const EdgeInsets.all(15.00),
+            mainAxisSize: MainAxisSize.max,
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                child: Text('Ingresar',
+                  style: TextStyle(fontSize: 25, color: Colors.white)),
+                color: Colors.orange[300],
+                onPressed: () { 
+                  Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MenuInicial()),
+                  (Route<dynamic> route) => false,
+                );}
+              ),
+            ]
+          )
+
+          ]
+        )
+      ),
     );
   }
 }
